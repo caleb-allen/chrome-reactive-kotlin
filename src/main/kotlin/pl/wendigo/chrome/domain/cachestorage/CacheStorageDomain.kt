@@ -3,11 +3,11 @@ package pl.wendigo.chrome.domain.cachestorage
 /**
  * CacheStorageDomain represents remote debugger protocol domain.
  */
-class CacheStorageDomain internal constructor(private val connectionRemote : pl.wendigo.chrome.DebuggerProtocol) {
+class CacheStorageDomain internal constructor(private val connectionRemote: pl.wendigo.chrome.DebuggerProtocol) {
     /**
      * Deletes a cache.
      */
-    fun deleteCache(input : DeleteCacheRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun deleteCache(input: DeleteCacheRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("CacheStorage.deleteCache", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -16,7 +16,7 @@ class CacheStorageDomain internal constructor(private val connectionRemote : pl.
     /**
      * Deletes a cache entry.
      */
-    fun deleteEntry(input : DeleteEntryRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun deleteEntry(input: DeleteEntryRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("CacheStorage.deleteEntry", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -25,7 +25,7 @@ class CacheStorageDomain internal constructor(private val connectionRemote : pl.
     /**
      * Requests cache names.
      */
-    fun requestCacheNames(input : RequestCacheNamesRequest) : io.reactivex.Single<RequestCacheNamesResponse> {
+    fun requestCacheNames(input: RequestCacheNamesRequest): io.reactivex.Single<RequestCacheNamesResponse> {
         return connectionRemote.runAndCaptureResponse("CacheStorage.requestCacheNames", input, RequestCacheNamesResponse::class.java).map {
             it.value()
         }
@@ -34,7 +34,7 @@ class CacheStorageDomain internal constructor(private val connectionRemote : pl.
     /**
      * Fetches cache entry.
      */
-    fun requestCachedResponse(input : RequestCachedResponseRequest) : io.reactivex.Single<RequestCachedResponseResponse> {
+    fun requestCachedResponse(input: RequestCachedResponseRequest): io.reactivex.Single<RequestCachedResponseResponse> {
         return connectionRemote.runAndCaptureResponse("CacheStorage.requestCachedResponse", input, RequestCachedResponseResponse::class.java).map {
             it.value()
         }
@@ -43,7 +43,7 @@ class CacheStorageDomain internal constructor(private val connectionRemote : pl.
     /**
      * Requests data from cache.
      */
-    fun requestEntries(input : RequestEntriesRequest) : io.reactivex.Single<RequestEntriesResponse> {
+    fun requestEntries(input: RequestEntriesRequest): io.reactivex.Single<RequestEntriesResponse> {
         return connectionRemote.runAndCaptureResponse("CacheStorage.requestEntries", input, RequestEntriesResponse::class.java).map {
             it.value()
         }
@@ -52,7 +52,7 @@ class CacheStorageDomain internal constructor(private val connectionRemote : pl.
     /**
      * Returns flowable capturing all CacheStorage domains events.
      */
-    fun events() : io.reactivex.Flowable<pl.wendigo.chrome.ProtocolEvent> {
+    fun events(): io.reactivex.Flowable<pl.wendigo.chrome.ProtocolEvent> {
         return connectionRemote.captureAllEvents().map { it.value() }.filter {
             it.protocolDomain() == "CacheStorage"
         }
@@ -67,7 +67,7 @@ data class DeleteCacheRequest (
     /**
      * Id of cache for deletion.
      */
-    val cacheId : CacheId
+    val cacheId: CacheId
 
 )
 
@@ -80,12 +80,12 @@ data class DeleteEntryRequest (
     /**
      * Id of cache where the entry will be deleted.
      */
-    val cacheId : CacheId,
+    val cacheId: CacheId,
 
     /**
      * URL spec of the request.
      */
-    val request : String
+    val request: String
 
 )
 
@@ -98,7 +98,7 @@ data class RequestCacheNamesRequest (
     /**
      * Security origin.
      */
-    val securityOrigin : String
+    val securityOrigin: String
 
 )
 
@@ -108,10 +108,10 @@ data class RequestCacheNamesRequest (
  * Requests cache names.
  */
 data class RequestCacheNamesResponse(
-  /**
-   * Caches for the security origin.
-   */
-  val caches : List<Cache>
+    /**
+     * Caches for the security origin.
+     */
+    val caches: List<Cache>
 
 )
 
@@ -122,14 +122,14 @@ data class RequestCacheNamesResponse(
  */
 data class RequestCachedResponseRequest (
     /**
-     * Id of cache that contains the enty.
+     * Id of cache that contains the entry.
      */
-    val cacheId : CacheId,
+    val cacheId: CacheId,
 
     /**
      * URL spec of the request.
      */
-    val requestURL : String
+    val requestURL: String
 
 )
 
@@ -139,10 +139,10 @@ data class RequestCachedResponseRequest (
  * Fetches cache entry.
  */
 data class RequestCachedResponseResponse(
-  /**
-   * Response read from the cache.
-   */
-  val response : CachedResponse
+    /**
+     * Response read from the cache.
+     */
+    val response: CachedResponse
 
 )
 
@@ -155,17 +155,22 @@ data class RequestEntriesRequest (
     /**
      * ID of cache to get entries from.
      */
-    val cacheId : CacheId,
+    val cacheId: CacheId,
 
     /**
      * Number of records to skip.
      */
-    val skipCount : Int,
+    val skipCount: Int,
 
     /**
      * Number of records to fetch.
      */
-    val pageSize : Int
+    val pageSize: Int,
+
+    /**
+     * If present, only return the entries containing this substring in the path
+     */
+    val pathFilter: String? = null
 
 )
 
@@ -175,15 +180,14 @@ data class RequestEntriesRequest (
  * Requests data from cache.
  */
 data class RequestEntriesResponse(
-  /**
-   * Array of object store data entries.
-   */
-  val cacheDataEntries : List<DataEntry>,
+    /**
+     * Array of object store data entries.
+     */
+    val cacheDataEntries: List<DataEntry>,
 
-  /**
-   * If true, there are more entries to fetch in the given range.
-   */
-  val hasMore : Boolean
+    /**
+     * If true, there are more entries to fetch in the given range.
+     */
+    val hasMore: Boolean
 
 )
-

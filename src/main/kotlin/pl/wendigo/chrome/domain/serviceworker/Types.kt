@@ -5,20 +5,20 @@ package pl.wendigo.chrome.domain.serviceworker
  */
 
 data class ServiceWorkerRegistration(
-  /**
-   *
-   */
-  val registrationId : String,
+    /**
+     *
+     */
+    val registrationId: String,
 
-  /**
-   *
-   */
-  val scopeURL : String,
+    /**
+     *
+     */
+    val scopeURL: String,
 
-  /**
-   *
-   */
-  val isDeleted : Boolean
+    /**
+     *
+     */
+    val isDeleted: Boolean
 )
 
 /**
@@ -48,51 +48,51 @@ enum class ServiceWorkerVersionStatus {
  */
 
 data class ServiceWorkerVersion(
-  /**
-   *
-   */
-  val versionId : String,
+    /**
+     *
+     */
+    val versionId: String,
 
-  /**
-   *
-   */
-  val registrationId : String,
+    /**
+     *
+     */
+    val registrationId: String,
 
-  /**
-   *
-   */
-  val scriptURL : String,
+    /**
+     *
+     */
+    val scriptURL: String,
 
-  /**
-   *
-   */
-  val runningStatus : ServiceWorkerVersionRunningStatus,
+    /**
+     *
+     */
+    val runningStatus: ServiceWorkerVersionRunningStatus,
 
-  /**
-   *
-   */
-  val status : ServiceWorkerVersionStatus,
+    /**
+     *
+     */
+    val status: ServiceWorkerVersionStatus,
 
-  /**
-   * The Last-Modified header value of the main script.
-   */
-  val scriptLastModified : Double? = null,
+    /**
+     * The Last-Modified header value of the main script.
+     */
+    val scriptLastModified: Double? = null,
 
-  /**
-   * The time at which the response headers of the main script were received from the server.
-For cached script it is the last time the cache entry was validated.
-   */
-  val scriptResponseTime : Double? = null,
+    /**
+     * The time at which the response headers of the main script were received from the server.
+  For cached script it is the last time the cache entry was validated.
+     */
+    val scriptResponseTime: Double? = null,
 
-  /**
-   *
-   */
-  val controlledClients : List<pl.wendigo.chrome.domain.target.TargetID>? = null,
+    /**
+     *
+     */
+    val controlledClients: List<pl.wendigo.chrome.domain.target.TargetID>? = null,
 
-  /**
-   *
-   */
-  val targetId : pl.wendigo.chrome.domain.target.TargetID? = null
+    /**
+     *
+     */
+    val targetId: pl.wendigo.chrome.domain.target.TargetID? = null
 )
 
 /**
@@ -100,34 +100,33 @@ For cached script it is the last time the cache entry was validated.
  */
 
 data class ServiceWorkerErrorMessage(
-  /**
-   *
-   */
-  val errorMessage : String,
+    /**
+     *
+     */
+    val errorMessage: String,
 
-  /**
-   *
-   */
-  val registrationId : String,
+    /**
+     *
+     */
+    val registrationId: String,
 
-  /**
-   *
-   */
-  val versionId : String,
+    /**
+     *
+     */
+    val versionId: String,
 
-  /**
-   *
-   */
-  val sourceURL : String,
+    /**
+     *
+     */
+    val sourceURL: String,
 
-  /**
-   *
-   */
-  val lineNumber : Int,
+    /**
+     *
+     */
+    val lineNumber: Int,
 
-  /**
-   *
-   */
-  val columnNumber : Int
+    /**
+     *
+     */
+    val columnNumber: Int
 )
-

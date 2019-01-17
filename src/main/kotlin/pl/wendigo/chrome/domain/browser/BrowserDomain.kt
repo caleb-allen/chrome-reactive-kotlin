@@ -3,12 +3,39 @@ package pl.wendigo.chrome.domain.browser
 /**
  * The Browser domain defines methods and events for browser managing.
  */
-class BrowserDomain internal constructor(private val connectionRemote : pl.wendigo.chrome.DebuggerProtocol) {
+class BrowserDomain internal constructor(private val connectionRemote: pl.wendigo.chrome.DebuggerProtocol) {
+    /**
+     * Grant specific permissions to the given origin and reject all others.
+     */
+    fun grantPermissions(input: GrantPermissionsRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+        return connectionRemote.runAndCaptureResponse("Browser.grantPermissions", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
+            it.value()
+        }
+    }
+
+    /**
+     * Reset all permission management for all origins.
+     */
+    fun resetPermissions(input: ResetPermissionsRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+        return connectionRemote.runAndCaptureResponse("Browser.resetPermissions", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
+            it.value()
+        }
+    }
+
     /**
      * Close browser gracefully.
      */
-    fun close() : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun close(): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("Browser.close", null, pl.wendigo.chrome.ResponseFrame::class.java).map {
+            it.value()
+        }
+    }
+
+    /**
+     * Crashes browser on the main thread.
+     */
+    fun crash(): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+        return connectionRemote.runAndCaptureResponse("Browser.crash", null, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
     }
@@ -16,7 +43,7 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
     /**
      * Returns version information.
      */
-    fun getVersion() : io.reactivex.Single<GetVersionResponse> {
+    fun getVersion(): io.reactivex.Single<GetVersionResponse> {
         return connectionRemote.runAndCaptureResponse("Browser.getVersion", null, GetVersionResponse::class.java).map {
             it.value()
         }
@@ -26,7 +53,7 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
      * Returns the command line switches for the browser process if, and only if
 --enable-automation is on the commandline.
      */
-    fun getBrowserCommandLine() : io.reactivex.Single<GetBrowserCommandLineResponse> {
+    fun getBrowserCommandLine(): io.reactivex.Single<GetBrowserCommandLineResponse> {
         return connectionRemote.runAndCaptureResponse("Browser.getBrowserCommandLine", null, GetBrowserCommandLineResponse::class.java).map {
             it.value()
         }
@@ -35,7 +62,7 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
     /**
      * Get Chrome histograms.
      */
-    fun getHistograms(input : GetHistogramsRequest) : io.reactivex.Single<GetHistogramsResponse> {
+    fun getHistograms(input: GetHistogramsRequest): io.reactivex.Single<GetHistogramsResponse> {
         return connectionRemote.runAndCaptureResponse("Browser.getHistograms", input, GetHistogramsResponse::class.java).map {
             it.value()
         }
@@ -44,7 +71,7 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
     /**
      * Get a Chrome histogram by name.
      */
-    fun getHistogram(input : GetHistogramRequest) : io.reactivex.Single<GetHistogramResponse> {
+    fun getHistogram(input: GetHistogramRequest): io.reactivex.Single<GetHistogramResponse> {
         return connectionRemote.runAndCaptureResponse("Browser.getHistogram", input, GetHistogramResponse::class.java).map {
             it.value()
         }
@@ -53,7 +80,7 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
     /**
      * Get position and size of the browser window.
      */
-    fun getWindowBounds(input : GetWindowBoundsRequest) : io.reactivex.Single<GetWindowBoundsResponse> {
+    fun getWindowBounds(input: GetWindowBoundsRequest): io.reactivex.Single<GetWindowBoundsResponse> {
         return connectionRemote.runAndCaptureResponse("Browser.getWindowBounds", input, GetWindowBoundsResponse::class.java).map {
             it.value()
         }
@@ -62,7 +89,7 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
     /**
      * Get the browser window that contains the devtools target.
      */
-    fun getWindowForTarget(input : GetWindowForTargetRequest) : io.reactivex.Single<GetWindowForTargetResponse> {
+    fun getWindowForTarget(input: GetWindowForTargetRequest): io.reactivex.Single<GetWindowForTargetResponse> {
         return connectionRemote.runAndCaptureResponse("Browser.getWindowForTarget", input, GetWindowForTargetResponse::class.java).map {
             it.value()
         }
@@ -71,8 +98,17 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
     /**
      * Set position and/or size of the browser window.
      */
-    fun setWindowBounds(input : SetWindowBoundsRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun setWindowBounds(input: SetWindowBoundsRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("Browser.setWindowBounds", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
+            it.value()
+        }
+    }
+
+    /**
+     * Set dock tile details, platform-specific.
+     */
+    fun setDockTile(input: SetDockTileRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+        return connectionRemote.runAndCaptureResponse("Browser.setDockTile", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
     }
@@ -80,12 +116,47 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
     /**
      * Returns flowable capturing all Browser domains events.
      */
-    fun events() : io.reactivex.Flowable<pl.wendigo.chrome.ProtocolEvent> {
+    fun events(): io.reactivex.Flowable<pl.wendigo.chrome.ProtocolEvent> {
         return connectionRemote.captureAllEvents().map { it.value() }.filter {
             it.protocolDomain() == "Browser"
         }
     }
 }
+/**
+ * Represents request frame that can be used with Browser.grantPermissions method call.
+ *
+ * Grant specific permissions to the given origin and reject all others.
+ */
+data class GrantPermissionsRequest (
+    /**
+     *
+     */
+    val origin: String,
+
+    /**
+     *
+     */
+    val permissions: List<PermissionType>,
+
+    /**
+     * BrowserContext to override permissions. When omitted, default browser context is used.
+     */
+    val browserContextId: pl.wendigo.chrome.domain.target.BrowserContextID? = null
+
+)
+
+/**
+ * Represents request frame that can be used with Browser.resetPermissions method call.
+ *
+ * Reset all permission management for all origins.
+ */
+data class ResetPermissionsRequest (
+    /**
+     * BrowserContext to reset permissions. When omitted, default browser context is used.
+     */
+    val browserContextId: pl.wendigo.chrome.domain.target.BrowserContextID? = null
+
+)
 
 /**
  * Represents response frame for Browser.getVersion method call.
@@ -93,30 +164,30 @@ class BrowserDomain internal constructor(private val connectionRemote : pl.wendi
  * Returns version information.
  */
 data class GetVersionResponse(
-  /**
-   * Protocol version.
-   */
-  val protocolVersion : String,
+    /**
+     * Protocol version.
+     */
+    val protocolVersion: String,
 
-  /**
-   * Product name.
-   */
-  val product : String,
+    /**
+     * Product name.
+     */
+    val product: String,
 
-  /**
-   * Product revision.
-   */
-  val revision : String,
+    /**
+     * Product revision.
+     */
+    val revision: String,
 
-  /**
-   * User-Agent.
-   */
-  val userAgent : String,
+    /**
+     * User-Agent.
+     */
+    val userAgent: String,
 
-  /**
-   * V8 version.
-   */
-  val jsVersion : String
+    /**
+     * V8 version.
+     */
+    val jsVersion: String
 
 )
 
@@ -127,10 +198,10 @@ data class GetVersionResponse(
 --enable-automation is on the commandline.
  */
 data class GetBrowserCommandLineResponse(
-  /**
-   * Commandline parameters
-   */
-  val arguments : List<String>
+    /**
+     * Commandline parameters
+     */
+    val arguments: List<String>
 
 )
 
@@ -145,7 +216,12 @@ data class GetHistogramsRequest (
 substring in their name are extracted. An empty or absent query returns
 all histograms.
      */
-    val query : String? = null
+    val query: String? = null,
+
+    /**
+     * If true, retrieve delta since last call.
+     */
+    val delta: Boolean? = null
 
 )
 
@@ -155,10 +231,10 @@ all histograms.
  * Get Chrome histograms.
  */
 data class GetHistogramsResponse(
-  /**
-   * Histograms.
-   */
-  val histograms : List<Histogram>
+    /**
+     * Histograms.
+     */
+    val histograms: List<Histogram>
 
 )
 
@@ -171,7 +247,12 @@ data class GetHistogramRequest (
     /**
      * Requested histogram name.
      */
-    val name : String
+    val name: String,
+
+    /**
+     * If true, retrieve delta since last call.
+     */
+    val delta: Boolean? = null
 
 )
 
@@ -181,10 +262,10 @@ data class GetHistogramRequest (
  * Get a Chrome histogram by name.
  */
 data class GetHistogramResponse(
-  /**
-   * Histogram.
-   */
-  val histogram : Histogram
+    /**
+     * Histogram.
+     */
+    val histogram: Histogram
 
 )
 
@@ -197,7 +278,7 @@ data class GetWindowBoundsRequest (
     /**
      * Browser window id.
      */
-    val windowId : WindowID
+    val windowId: WindowID
 
 )
 
@@ -207,11 +288,11 @@ data class GetWindowBoundsRequest (
  * Get position and size of the browser window.
  */
 data class GetWindowBoundsResponse(
-  /**
-   * Bounds information of the window. When window state is 'minimized', the restored window
-position and size are returned.
-   */
-  val bounds : Bounds
+    /**
+     * Bounds information of the window. When window state is 'minimized', the restored window
+  position and size are returned.
+     */
+    val bounds: Bounds
 
 )
 
@@ -222,9 +303,9 @@ position and size are returned.
  */
 data class GetWindowForTargetRequest (
     /**
-     * Devtools agent host id.
+     * Devtools agent host id. If called as a part of the session, associated targetId is used.
      */
-    val targetId : pl.wendigo.chrome.domain.target.TargetID
+    val targetId: pl.wendigo.chrome.domain.target.TargetID? = null
 
 )
 
@@ -234,16 +315,16 @@ data class GetWindowForTargetRequest (
  * Get the browser window that contains the devtools target.
  */
 data class GetWindowForTargetResponse(
-  /**
-   * Browser window id.
-   */
-  val windowId : WindowID,
+    /**
+     * Browser window id.
+     */
+    val windowId: WindowID,
 
-  /**
-   * Bounds information of the window. When window state is 'minimized', the restored window
-position and size are returned.
-   */
-  val bounds : Bounds
+    /**
+     * Bounds information of the window. When window state is 'minimized', the restored window
+  position and size are returned.
+     */
+    val bounds: Bounds
 
 )
 
@@ -256,13 +337,30 @@ data class SetWindowBoundsRequest (
     /**
      * Browser window id.
      */
-    val windowId : WindowID,
+    val windowId: WindowID,
 
     /**
      * New window bounds. The 'minimized', 'maximized' and 'fullscreen' states cannot be combined
 with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged.
      */
-    val bounds : Bounds
+    val bounds: Bounds
 
 )
 
+/**
+ * Represents request frame that can be used with Browser.setDockTile method call.
+ *
+ * Set dock tile details, platform-specific.
+ */
+data class SetDockTileRequest (
+    /**
+     *
+     */
+    val badgeLabel: String? = null,
+
+    /**
+     * Png encoded image.
+     */
+    val image: String? = null
+
+)

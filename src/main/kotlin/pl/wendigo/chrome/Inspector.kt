@@ -19,7 +19,7 @@ class Inspector(
     /**
      * Opens new page.
      */
-    fun openNewPage(url : String? = null) : Single<InspectablePage> {
+    fun openNewPage(url: String? = null): Single<InspectablePage> {
         return runInspectorCommand("new?url=$url").map {
             mapper.deserialize(it, InspectablePage::class.java)
         }
@@ -28,7 +28,7 @@ class Inspector(
     /**
      * Returns currently opened pages and associated data (debugger connection uris)
      */
-    fun openedPages() : Flowable<InspectablePage> {
+    fun openedPages(): Flowable<InspectablePage> {
         return this.runInspectorCommand("list").flatMapObservable {
             Observable.fromArray(*mapper.deserialize(it, Array<InspectablePage>::class.java))
         }.toFlowable(BackpressureStrategy.BUFFER).filter {
@@ -53,7 +53,7 @@ class Inspector(
     /**
      * Fetches protocol version information
      */
-    fun version() : Single<ProtocolVersion> {
+    fun version(): Single<ProtocolVersion> {
         return runInspectorCommand("version").map {
             mapper.deserialize(it, ProtocolVersion::class.java)
         }
@@ -62,14 +62,14 @@ class Inspector(
     /**
      * Finds opened page by its' url
      */
-    fun findTab(tabUrl: String) : Single<InspectablePage> {
+    fun findTab(tabUrl: String): Single<InspectablePage> {
         return this.openedPages().filter { it.url == tabUrl }.singleOrError()
     }
 
     /**
      * Run inspector command from URI
      */
-    internal fun runInspectorCommand(uri : String) : Single<String> {
+    internal fun runInspectorCommand(uri: String): Single<String> {
         return Single.fromCallable {
             Request.Builder().url("http://$chromeAddress/json/$uri").build()
         }.map {
@@ -88,7 +88,7 @@ class Inspector(
          * Creates new Inspector instance by connecting to remote chrome debugger.
          */
         @JvmStatic
-        fun connect(chromeAddress: String) : Inspector {
+        fun connect(chromeAddress: String): Inspector {
             return Inspector(
                     chromeAddress,
                     OkHttpClient.Builder().readTimeout(0, TimeUnit.MILLISECONDS).build(),
@@ -97,4 +97,3 @@ class Inspector(
         }
     }
 }
-

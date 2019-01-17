@@ -8,7 +8,7 @@ data class HeadlessSession (
     val browserContextId: BrowserContextID,
     val targetId: TargetID,
     val sessionId: SessionID,
-    val height : Int,
-    val width : Int,
-    val url : String
+    val height: Int,
+    val width: Int,
+    val url: String
 )

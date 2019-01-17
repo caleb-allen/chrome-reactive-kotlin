@@ -57,6 +57,7 @@ compileKotlin {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {

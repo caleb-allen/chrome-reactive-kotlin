@@ -3,11 +3,11 @@ package pl.wendigo.chrome.domain.serviceworker
 /**
  * ServiceWorkerDomain represents remote debugger protocol domain.
  */
-class ServiceWorkerDomain internal constructor(private val connectionRemote : pl.wendigo.chrome.DebuggerProtocol) {
+class ServiceWorkerDomain internal constructor(private val connectionRemote: pl.wendigo.chrome.DebuggerProtocol) {
     /**
      *
      */
-    fun deliverPushMessage(input : DeliverPushMessageRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun deliverPushMessage(input: DeliverPushMessageRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.deliverPushMessage", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -16,7 +16,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun disable() : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun disable(): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.disable", null, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -25,7 +25,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun dispatchSyncEvent(input : DispatchSyncEventRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun dispatchSyncEvent(input: DispatchSyncEventRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.dispatchSyncEvent", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -34,7 +34,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun enable() : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun enable(): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.enable", null, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -43,7 +43,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun inspectWorker(input : InspectWorkerRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun inspectWorker(input: InspectWorkerRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.inspectWorker", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -52,7 +52,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun setForceUpdateOnPageLoad(input : SetForceUpdateOnPageLoadRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun setForceUpdateOnPageLoad(input: SetForceUpdateOnPageLoadRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.setForceUpdateOnPageLoad", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -61,7 +61,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun skipWaiting(input : SkipWaitingRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun skipWaiting(input: SkipWaitingRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.skipWaiting", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -70,7 +70,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun startWorker(input : StartWorkerRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun startWorker(input: StartWorkerRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.startWorker", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -79,7 +79,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun stopAllWorkers() : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun stopAllWorkers(): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.stopAllWorkers", null, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -88,7 +88,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun stopWorker(input : StopWorkerRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun stopWorker(input: StopWorkerRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.stopWorker", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -97,7 +97,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun unregister(input : UnregisterRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun unregister(input: UnregisterRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.unregister", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -106,7 +106,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      *
      */
-    fun updateRegistration(input : UpdateRegistrationRequest) : io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
+    fun updateRegistration(input: UpdateRegistrationRequest): io.reactivex.Single<pl.wendigo.chrome.ResponseFrame> {
         return connectionRemote.runAndCaptureResponse("ServiceWorker.updateRegistration", input, pl.wendigo.chrome.ResponseFrame::class.java).map {
             it.value()
         }
@@ -115,7 +115,7 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      * Returns observable capturing all ServiceWorker.workerErrorReported events.
      */
-    fun workerErrorReported() : io.reactivex.Flowable<WorkerErrorReportedEvent> {
+    fun workerErrorReported(): io.reactivex.Flowable<WorkerErrorReportedEvent> {
         return workerErrorReportedTimed().map {
             it.value()
         }
@@ -124,14 +124,14 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      * Returns observable capturing all ServiceWorker.workerErrorReported events.
      */
-    fun workerErrorReportedTimed() : io.reactivex.Flowable<io.reactivex.schedulers.Timed<WorkerErrorReportedEvent>> {
+    fun workerErrorReportedTimed(): io.reactivex.Flowable<io.reactivex.schedulers.Timed<WorkerErrorReportedEvent>> {
         return connectionRemote.captureEvents("ServiceWorker.workerErrorReported", WorkerErrorReportedEvent::class.java)
     }
 
     /**
      * Returns observable capturing all ServiceWorker.workerRegistrationUpdated events.
      */
-    fun workerRegistrationUpdated() : io.reactivex.Flowable<WorkerRegistrationUpdatedEvent> {
+    fun workerRegistrationUpdated(): io.reactivex.Flowable<WorkerRegistrationUpdatedEvent> {
         return workerRegistrationUpdatedTimed().map {
             it.value()
         }
@@ -140,14 +140,14 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      * Returns observable capturing all ServiceWorker.workerRegistrationUpdated events.
      */
-    fun workerRegistrationUpdatedTimed() : io.reactivex.Flowable<io.reactivex.schedulers.Timed<WorkerRegistrationUpdatedEvent>> {
+    fun workerRegistrationUpdatedTimed(): io.reactivex.Flowable<io.reactivex.schedulers.Timed<WorkerRegistrationUpdatedEvent>> {
         return connectionRemote.captureEvents("ServiceWorker.workerRegistrationUpdated", WorkerRegistrationUpdatedEvent::class.java)
     }
 
     /**
      * Returns observable capturing all ServiceWorker.workerVersionUpdated events.
      */
-    fun workerVersionUpdated() : io.reactivex.Flowable<WorkerVersionUpdatedEvent> {
+    fun workerVersionUpdated(): io.reactivex.Flowable<WorkerVersionUpdatedEvent> {
         return workerVersionUpdatedTimed().map {
             it.value()
         }
@@ -156,14 +156,14 @@ class ServiceWorkerDomain internal constructor(private val connectionRemote : pl
     /**
      * Returns observable capturing all ServiceWorker.workerVersionUpdated events.
      */
-    fun workerVersionUpdatedTimed() : io.reactivex.Flowable<io.reactivex.schedulers.Timed<WorkerVersionUpdatedEvent>> {
+    fun workerVersionUpdatedTimed(): io.reactivex.Flowable<io.reactivex.schedulers.Timed<WorkerVersionUpdatedEvent>> {
         return connectionRemote.captureEvents("ServiceWorker.workerVersionUpdated", WorkerVersionUpdatedEvent::class.java)
     }
 
     /**
      * Returns flowable capturing all ServiceWorker domains events.
      */
-    fun events() : io.reactivex.Flowable<pl.wendigo.chrome.ProtocolEvent> {
+    fun events(): io.reactivex.Flowable<pl.wendigo.chrome.ProtocolEvent> {
         return connectionRemote.captureAllEvents().map { it.value() }.filter {
             it.protocolDomain() == "ServiceWorker"
         }
@@ -178,17 +178,17 @@ data class DeliverPushMessageRequest (
     /**
      *
      */
-    val origin : String,
+    val origin: String,
 
     /**
      *
      */
-    val registrationId : String,
+    val registrationId: String,
 
     /**
      *
      */
-    val data : String
+    val data: String
 
 )
 
@@ -201,22 +201,22 @@ data class DispatchSyncEventRequest (
     /**
      *
      */
-    val origin : String,
+    val origin: String,
 
     /**
      *
      */
-    val registrationId : String,
+    val registrationId: String,
 
     /**
      *
      */
-    val tag : String,
+    val tag: String,
 
     /**
      *
      */
-    val lastChance : Boolean
+    val lastChance: Boolean
 
 )
 
@@ -229,7 +229,7 @@ data class InspectWorkerRequest (
     /**
      *
      */
-    val versionId : String
+    val versionId: String
 
 )
 
@@ -242,7 +242,7 @@ data class SetForceUpdateOnPageLoadRequest (
     /**
      *
      */
-    val forceUpdateOnPageLoad : Boolean
+    val forceUpdateOnPageLoad: Boolean
 
 )
 
@@ -255,7 +255,7 @@ data class SkipWaitingRequest (
     /**
      *
      */
-    val scopeURL : String
+    val scopeURL: String
 
 )
 
@@ -268,7 +268,7 @@ data class StartWorkerRequest (
     /**
      *
      */
-    val scopeURL : String
+    val scopeURL: String
 
 )
 
@@ -281,7 +281,7 @@ data class StopWorkerRequest (
     /**
      *
      */
-    val versionId : String
+    val versionId: String
 
 )
 
@@ -294,7 +294,7 @@ data class UnregisterRequest (
     /**
      *
      */
-    val scopeURL : String
+    val scopeURL: String
 
 )
 
@@ -307,7 +307,7 @@ data class UpdateRegistrationRequest (
     /**
      *
      */
-    val scopeURL : String
+    val scopeURL: String
 
 )
 
@@ -317,10 +317,10 @@ data class UpdateRegistrationRequest (
  *
  */
 data class WorkerErrorReportedEvent(
-  /**
-   *
-   */
-  val errorMessage : ServiceWorkerErrorMessage
+    /**
+     *
+     */
+    val errorMessage: ServiceWorkerErrorMessage
 
 ) : pl.wendigo.chrome.ProtocolEvent(domain = "ServiceWorker", name = "workerErrorReported")
 
@@ -330,10 +330,10 @@ data class WorkerErrorReportedEvent(
  *
  */
 data class WorkerRegistrationUpdatedEvent(
-  /**
-   *
-   */
-  val registrations : List<ServiceWorkerRegistration>
+    /**
+     *
+     */
+    val registrations: List<ServiceWorkerRegistration>
 
 ) : pl.wendigo.chrome.ProtocolEvent(domain = "ServiceWorker", name = "workerRegistrationUpdated")
 
@@ -343,10 +343,9 @@ data class WorkerRegistrationUpdatedEvent(
  *
  */
 data class WorkerVersionUpdatedEvent(
-  /**
-   *
-   */
-  val versions : List<ServiceWorkerVersion>
+    /**
+     *
+     */
+    val versions: List<ServiceWorkerVersion>
 
 ) : pl.wendigo.chrome.ProtocolEvent(domain = "ServiceWorker", name = "workerVersionUpdated")
-

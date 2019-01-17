@@ -44,7 +44,7 @@ data class InspectablePage(
     /**
      * Opens new chrome protocol debugger connection.
      */
-    fun connect() : ChromeProtocol {
+    fun connect(): ChromeProtocol {
         return ChromeProtocol.openSession(this)
     }
 }

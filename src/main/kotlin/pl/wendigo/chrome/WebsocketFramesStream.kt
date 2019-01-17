@@ -52,7 +52,7 @@ class WebsocketFramesStream : WebSocketListener, FramesStream {
     /**
      * Returns protocol response (if any).
      */
-    override fun <T> getResponse(requestFrame: RequestFrame, clazz: Class<T>) : Single<Timed<T>> {
+    override fun <T> getResponse(requestFrame: RequestFrame, clazz: Class<T>): Single<Timed<T>> {
         return frames()
             .filter { it.value().isResponse(requestFrame.id) }
             .flatMapSingle { frame ->
@@ -68,7 +68,7 @@ class WebsocketFramesStream : WebSocketListener, FramesStream {
     /**
      * Sends frame over the connection.
      */
-    override fun send(frame: RequestFrame) : Single<Boolean> {
+    override fun send(frame: RequestFrame): Single<Boolean> {
         return Single
             .just(frame)
             .flatMap { mapper.serialize(it) }
@@ -79,14 +79,14 @@ class WebsocketFramesStream : WebSocketListener, FramesStream {
     /**
      * Returns all event frames.
      */
-    override fun eventFrames() : Observable<Timed<ResponseFrame>> = frames().filter {
+    override fun eventFrames(): Observable<Timed<ResponseFrame>> = frames().filter {
         it.value().isEvent()
     }
 
     /**
      * Returns all frames.
      */
-    override fun frames() : Observable<Timed<ResponseFrame>> = messages
+    override fun frames(): Observable<Timed<ResponseFrame>> = messages
 
     /**
      * Closes stream
@@ -96,13 +96,13 @@ class WebsocketFramesStream : WebSocketListener, FramesStream {
             connection.close(1000, "Goodbye!")
             connection.cancel()
             client.connectionPool().evictAll()
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             logger.warn("caught exception while closing: ${e.message}")
         }
 
         try {
             messages.onComplete()
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             logger.warn("caught exception while completing subject: ${e.message}")
         }
     }
