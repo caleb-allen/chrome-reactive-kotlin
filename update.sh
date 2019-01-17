@@ -10,12 +10,13 @@ js="js_protocol.json"
 version="master"
 
 trap "rm -f '$browser' '$js'" EXIT
+# WebKit
+base='https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/json'
 
-base='https://chromium.googlesource.com'
-printf "${GREEN}Fetching:\n\t/chromium/src/+/$version/third_party/WebKit/Source/core/inspector/browser_protocol.json?format=TEXT...${NC}\n"
-curl -s "$base/chromium/src/+/$version/third_party/WebKit/Source/core/inspector/browser_protocol.json?format=TEXT" | base64 --decode >"$browser"
-printf "${GREEN}\t/v8/v8/+/master/src/inspector/js_protocol.json?format=TEXT...${NC}\n"
-curl -s "$base/v8/v8/+/master/src/inspector/js_protocol.json?format=TEXT" | base64 --decode >"$js"
+printf "${GREEN}Fetching:\n\t$base/browser_protocol.json"
+curl -s "$base/browser_protocol.json" > "$browser"
+printf "${GREEN}Fetching:\n\t$base/js_protocol.json"
+curl -s "$base/js_protocol.json" > "$js"
 
 printf "${GREEN}Merging files $js $browser into protocol.json${NC}\n"
 
