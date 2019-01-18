@@ -74,6 +74,8 @@ dependencies {
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
     ktlint group: 'com.github.shyiko', name: 'ktlint', version: '0.20.0'
 }
 
