@@ -79,9 +79,9 @@ dependencies {
     ktlint group: 'com.github.shyiko', name: 'ktlint', version: '0.20.0'
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+//    sign configurations.archives
+//}
 
 uploadArchives {
     repositories {
